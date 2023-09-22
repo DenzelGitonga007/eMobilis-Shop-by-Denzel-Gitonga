@@ -1,0 +1,93 @@
+{% extends 'common/base.html' %}
+
+{% block title %}Register | eMobilis Shop {% endblock %}
+
+{% block content %}
+  <!-- To display the messages -->
+  <!-- The messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+
+  <!-- To let the message disappear after a few seconds -->
+  <script>
+      setTimeout(function() {
+          $('.alert').fadeOut('slow');
+      }, 3000);
+  </script>
+<!-- Content -->
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-lg-6 offset-lg-3">
+                <div class="card">
+                    <div class="card-body">
+                        <h2 class="text-center mb-4">User Registration</h2>
+                        <form method="post">
+                            <!-- To handle errors -->
+                            {% if form.errors %}
+                            <div class="alert alert-danger">
+                                {% for field in form %}
+                                {% for error in field.errors %}
+                                    <strong>{{ field.label }}:</strong> {{ error }}
+                                {% endfor %}
+                                {% endfor %}
+                            </div>
+                            {% endif %}
+                            {% csrf_token %}
+                            <!-- Username and email -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" name="username" id="id_username" placeholder="Enter your username" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="email">Email Address</label>
+                                    <input type="email" class="form-control" name="email" id="id_email" placeholder="Enter your email address" required>
+                                </div>
+                            </div>
+
+                            <!-- Full name and phone number -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="full_name">Full Name</label>
+                                    <input type="text" class="form-control" name="full_name" id="id_full_name" placeholder="Enter your full name" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="phone_number">Phone Number</label>
+                                    <input type="tel" class="form-control" name="phone_number" id="id_phone_number" placeholder="Enter your phone number" required>
+                                </div>
+                            </div>
+
+                            <!-- Password and Confirm password -->
+                            <div class="form-row">
+                                <div class="form-group col-md-6">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" name="password1" id="id_password1" placeholder="Enter your password" required>
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="confirm-password">Confirm Password</label>
+                                    <input type="password" class="form-control" name="password2" id="id_password2" placeholder="Confirm your password" required>
+                                </div>
+                            </div>
+                            <!-- Actions -->
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-primary">Register</button>
+                            </div>
+                        </form>
+                        <p class="mt-3 text-center">Already have an account? <a href="{% url 'accounts:login' %}">Login here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<!-- End of content -->
+{% endblock %}

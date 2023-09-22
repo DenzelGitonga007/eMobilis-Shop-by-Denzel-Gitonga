@@ -1,0 +1,77 @@
+
+{% extends 'common/base.html' %}
+{% block title %} Product List | eMobilis Shop {% endblock %}
+{% block content %}
+  <!-- To display the messages -->
+  <!-- The messages -->
+  {% if messages %}
+    {% for message in messages %}
+      <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+    {% endfor %}
+  {% endif %}
+
+
+  <!-- To let the message disappear after a few seconds -->
+  <script>
+      setTimeout(function() {
+          $('.alert').fadeOut('slow');
+      }, 3000);
+  </script>
+<!-- End of message script -->
+
+
+<div class="container mt-5">
+  <div class="card">
+    <!-- Header -->
+    <div class="card-header">
+      <div class="d-flex justify-content-between align-items-center">
+        <h2 class="card-title text-center mb-4">Product List</h2>
+        <div>
+          <a class="btn btn-success rounded mr-2" href="{% url 'crud:create_product' %}">
+            <i class="fa fa-plus mr-2" style="font-size: 20px;"></i>Create Product
+          </a>
+
+        </div>
+      </div>
+    </div>
+    <!-- End of header     -->
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead class="thead-light">
+            <tr>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Description</th>
+                <th>Actions</th>
+              </tr>
+          </thead>
+          <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.name }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.description }}</td>
+                <td>
+                <div class="btn-group">
+                    <a href="{% url 'crud:update_product' product.pk %}" class="btn btn-primary btn-sm mr-2 rounded">Update</a>
+                    <a href="{% url 'crud:delete_product' product.pk %}" class="btn btn-danger btn-sm rounded">Delete</a>
+                </div>
+                </td>
+            </tr>
+            {% endfor %}
+            
+             
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
